@@ -3,7 +3,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['items'])) {
     $selected = $_POST['items'];
     $indices = implode(",", $selected);
 
-    // Spuštění Python skriptu s předáním indexů jako argument
     $command = escapeshellcmd("python3 party_planner.py " . escapeshellarg($indices));
     $output = shell_exec($command);
 
