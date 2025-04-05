@@ -68,7 +68,7 @@ def adjust_code(base_code):
     return final_code, message
 
 def render_html(selected_names, selected_values, base_code, final_code, message):
-    html_output = f"""Content-Type: text/html
+    html_output = f"""
 
 <html>
 <head>
