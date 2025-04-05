@@ -1,3 +1,5 @@
+import sys
+
 party_items = [
     ("Cake", 20),
     ("Balloons", 21),
