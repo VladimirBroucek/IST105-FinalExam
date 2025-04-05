@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+
+import sys
+
+# Seznam položek a jejich hodnot
 party_items = [
     ("Cake", 20),
     ("Balloons", 21),
@@ -16,23 +21,22 @@ party_items = [
     ("Cleaning Service", 11),
 ]
 
-def display_items():
+def get_input_from_args():
+    try:
+        input_arg = sys.argv[1]
+        return [int(i.strip()) for i in input_arg.split(",")]
+    except (IndexError, ValueError):
+        print("Content-Type: text/html\n")
+        print("<html><body><h1>Error</h1><p>Invalid or missing input indices.</p></body></html>")
+        sys.exit(1)
+
+def get_input_from_console():
     print("Available Party Items:\n")
     for idx, (item, _) in enumerate(party_items):
         print(f"{idx}: {item}")
     print()
-
-def get_user_selection():
-    indices = input("Enter item indices separated by commas (0, 2): ")
-    try:
-        selected_indices = [int(i.strip()) for i in indices.split(",")]
-        for idx in selected_indices:
-            if idx < 0 or idx >= len(party_items):
-                raise ValueError
-        return selected_indices
-    except ValueError:
-        print("Invalid input. Please enter valid indices.")
-        exit()
+    indices = input("Enter item indices separated by commas (e.g., 0, 2): ")
+    return [int(i.strip()) for i in indices.split(",")]
 
 def calculate_party_code(selected_indices):
     selected_values = [party_items[i][1] for i in selected_indices]
@@ -50,48 +54,42 @@ def adjust_code(base_code):
         message = "Epic Party Incoming!"
     elif base_code > 5:
         final_code = base_code - 2
-        message = "Lets keep it classy"
+        message = "Let's keep it classy!"
     else:
         final_code = base_code
-        message = "Chill vibes only"
+        message = "Chill vibes only!"
     return final_code, message
 
 def render_html(selected_names, selected_values, base_code, final_code, message):
-    html_output = f"""
-    <html>
-    <head><title>Party Planner</title></head>
-    <body>
-        <h1>Selected Items:</h1>
-        <p>{', '.join(selected_names)}</p>
-        <h2>Base Party Code:</h2>
-        <p>{' & '.join(map(str, selected_values))} = {base_code}</p>
-        <h2>Final Party Code:</h2>
-        <p>{final_code}</p>
-        <h2>Message:</h2>
-        <p>{message}</p>
-    </body>
-    </html>
-    """
-    return html_output
+    html_output = f"""Content-Type: text/html
+
+<html>
+<head>
+    <title>Party Planner Result</title>
+</head>
+<body>
+    <h1>Selected Items:</h1>
+    <p>{', '.join(selected_names)}</p>
+
+    <h2>Base Party Code:</h2>
+    <p>{' & '.join(map(str, selected_values))} = {base_code}</p>
+
+    <h2>Final Party Code:</h2>
+    <p>{final_code}</p>
+
+    <h2>Message:</h2>
+    <p>{message}</p>
+</body>
+</html>
+"""
+    print(html_output)
 
 if __name__ == "__main__":
-    display_items()
-    selected_indices = get_user_selection()
+    if len(sys.argv) > 1:
+        selected_indices = get_input_from_args()
+    else:
+        selected_indices = get_input_from_console()
+
     base_code, selected_names, selected_values = calculate_party_code(selected_indices)
     final_code, message = adjust_code(base_code)
-    html = render_html(selected_names, selected_values, base_code, final_code, message)
-
-    print("\nGenerated HTML Output:\n")
-    print(html)
-
-
-
-
-
-
-
-
-
-
-
-
+    render_html(selected_names, selected_values, base_code, final_code, message)
