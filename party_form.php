@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['items'])) {
 <form method="POST" action="">
     <?php
     $items = [
-        "Cake", "Balloons", "Music System", "Lights", "Catering Service",
+        "Cake", "Balloonss", "Music System", "Lights", "Catering Service",
         "DJ", "Photo Booth", "Tables", "Chairs", "Drinks",
         "Party Hats", "Streamers", "Invitation Cards", "Party Games", "Cleaning Service"
     ];
