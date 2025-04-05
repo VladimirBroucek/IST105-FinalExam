@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['items'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Party Planner</title>
 </head>
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['items'])) {
         <label for="item<?= $index ?>"><?= $item ?></label><br>
     <?php endforeach; ?>
     <br>
-    <input type="submit" value="Plan the Party">
+    <input type="submit" value="Plan the Party.">
 </form>
 
 <?php if (!empty($output)): ?>
